@@ -13,14 +13,14 @@ def read_data_csv(filename):
             reviews.append(row[0])
             sentiments.append(row[1])
 
-    df = pd.DataFrame({'REVIEW': np.asarray(phrase), 'SENTIMENT': np.asarray(sentiment, dtype=int)})
+    df = pd.DataFrame({'REVIEW': np.asarray(reviews), 'SENTIMENT': np.asarray(sentiments, dtype=int)})
     return df
 
 def calcuate_accu(big_idx, targets):
     n_correct = (big_idx==targets).sum().item()
     return n_correct
 
-def train(model, training_loader, loss_function, optimizer, epoch, report_steps=50):
+def train(model, training_loader, loss_function, optimizer, epoch, device, report_steps=50):
     tr_loss = 0
     n_correct = 0
     nb_tr_steps = 0
@@ -59,7 +59,7 @@ def train(model, training_loader, loss_function, optimizer, epoch, report_steps=
 
     return
 
-def valid(model, testing_loader, loss_function, epoch, report_steps=10):
+def valid(model, testing_loader, loss_function, epoch, device, report_steps=10):
     model.eval()
     n_correct = 0; n_wrong = 0; total = 0
     tr_loss = 0; nb_tr_steps = 0; nb_tr_examples = 0
